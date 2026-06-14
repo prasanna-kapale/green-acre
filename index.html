@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Green Acre — Private Farmhouse Escapes</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="config.js"></script>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════════
+     NAVIGATION
+════════════════════════════════════════════════════════════ -->
+<nav class="nav">
+  <div class="container nav__inner">
+    <a href="#" class="nav__logo">
+      <div class="nav__logo-mark">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      </div>
+      <span class="nav__brand">The Green Acre</span>
+    </a>
+    <ul class="nav__links">
+      <li><a href="#amenities">Amenities</a></li>
+      <li><a href="#facilities">Facilities</a></li>
+      <li><a href="#booking">Booking</a></li>
+      <li><a href="#" onclick="openPolicyModal()">Rules & Policies</a></li>
+    </ul>
+    <a href="#booking" class="nav__cta">Check Availability</a>
+  </div>
+</nav>
+
+<!-- ════════════════════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════════════════ -->
+<section class="hero section">
+  <div class="container hero__inner" style="display:contents">
+    <div style="grid-column:1;padding:0 2rem;" class="hero__content animate-up">
+      <div class="hero__eyebrow label-sm">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Private & Exclusive
+      </div>
+      <h1 class="display display-xl hero__title">
+        Your Private<br><em>Escape</em> Awaits
+      </h1>
+      <p class="hero__subtitle">
+        A premium farmhouse retreat exclusively yours — pool, open grounds, and complete privacy for your group. No shared spaces, no strangers.
+      </p>
+      <div class="hero__actions">
+        <a href="#booking" class="btn-primary">
+          View Availability
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <a href="#amenities" class="btn-outline">Explore Amenities</a>
+      </div>
+      <div class="hero__stats">
+        <div>
+          <span class="hero__stat-number">100%</span>
+          <span class="hero__stat-label">Exclusive Access</span>
+        </div>
+        <div>
+          <span class="hero__stat-number">12hr</span>
+          <span class="hero__stat-label">Day / Night Slots</span>
+        </div>
+        <div>
+          <span class="hero__stat-number">4.9★</span>
+          <span class="hero__stat-label">Guest Rating</span>
+        </div>
+      </div>
+    </div>
+    <div style="grid-column:2;padding:4rem 2rem 4rem 0;" class="animate-up delay-2">
+      <div class="hero__image-wrap">
+        <div class="hero__image-placeholder">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+          <span>Property Photo</span>
+        </div>
+        <div class="hero__badge">
+          <div class="hero__badge-dot"></div>
+          <span>Available · Booking Open</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     AMENITIES
+════════════════════════════════════════════════════════════ -->
+<section id="amenities" class="section" style="background:white;border-top:1px solid var(--border)">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow label-sm">What We Offer</span>
+      <h2 class="display display-md">Amenities Spotlight</h2>
+      <p>Every amenity included in your booking. No extra charges, no surprises.</p>
+    </div>
+
+    <div class="amenities-grid">
+      <!-- Pool -->
+      <div class="amenity-card animate-up">
+        <div class="amenity-card__badge label-xs">Group Access Only</div>
+        <div class="amenity-card__icon">
+          <svg viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <h3 class="amenity-card__title">Private Swimming Pool</h3>
+        <p class="amenity-card__desc">100% exclusive to your group. No sharing with strangers — the pool is completely yours for your entire stay.</p>
+        <span class="amenity-card__arrow">↗</span>
+      </div>
+
+      <!-- Playing Ground -->
+      <div class="amenity-card animate-up delay-1">
+        <div class="amenity-card__badge label-xs">Outdoor Space</div>
+        <div class="amenity-card__icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <h3 class="amenity-card__title">Open Playing Ground</h3>
+        <p class="amenity-card__desc">A wide green space right next to the pool. Ideal for sports, casual games, or evening bonfires under the stars.</p>
+        <span class="amenity-card__arrow">↗</span>
+      </div>
+
+      <!-- Rooms -->
+      <div class="amenity-card animate-up delay-2">
+        <div class="amenity-card__badge label-xs">AC Equipped</div>
+        <div class="amenity-card__icon">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <h3 class="amenity-card__title">Cozy Overnight Rooms</h3>
+        <p class="amenity-card__desc">Clean, comfortable, air-conditioned spaces to unwind and rest — just steps away from all the action.</p>
+        <span class="amenity-card__arrow">↗</span>
+      </div>
+
+      <!-- Kids -->
+      <div class="amenity-card animate-up delay-3">
+        <div class="amenity-card__badge label-xs">Family Friendly</div>
+        <div class="amenity-card__icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
+        </div>
+        <h3 class="amenity-card__title">Kids Play Area</h3>
+        <p class="amenity-card__desc">A safe, dedicated outdoor zone featuring fun play sets and slides, keeping young guests safely entertained within sight.</p>
+        <span class="amenity-card__arrow">↗</span>
+      </div>
+
+      <!-- Rules Card (dark, wide) -->
+      <div class="amenity-card amenity-card--rules amenity-card--wide animate-up delay-4" onclick="openPolicyModal()" style="cursor:pointer">
+        <div class="amenity-card__badge label-xs">Important Reading</div>
+        <div class="amenity-card__icon">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </div>
+        <h3 class="amenity-card__title">Guest Rules, Notices & Rates</h3>
+        <p class="amenity-card__desc">Review check-in conditions, standard cleaning guidelines, check-out time limits, and flexible seasonal calendar rates. Click to read all policies before booking.</p>
+        <span class="amenity-card__arrow">↗</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     POPULAR FACILITIES
+════════════════════════════════════════════════════════════ -->
+<section id="facilities" class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow label-sm">Included With Every Stay</span>
+      <h2 class="display display-md">Popular Facilities</h2>
+    </div>
+
+    <div class="facilities-strip">
+      <div class="facilities-grid">
+        <div class="facility-item">
+          <div class="facility-item__icon">
+            <svg viewBox="0 0 24 24"><path d="M4 22V12a8 8 0 1116 0v10"/><path d="M2 22h20"/><path d="M6 22v-4"/><path d="M18 22v-4"/></svg>
+          </div>
+          <div class="facility-item__name">Shower Area</div>
+          <div class="facility-item__desc">Near pool zone</div>
+        </div>
+        <div class="facility-item">
+          <div class="facility-item__icon">
+            <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          </div>
+          <div class="facility-item__name">Car & Bike Parking</div>
+          <div class="facility-item__desc">Secure & enclosed</div>
+        </div>
+        <div class="facility-item">
+          <div class="facility-item__icon">
+            <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <div class="facility-item__name">24/7 Power Backup</div>
+          <div class="facility-item__desc">Generator & inverter</div>
+        </div>
+        <div class="facility-item">
+          <div class="facility-item__icon">
+            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><circle cx="12" cy="13" r="3"/></svg>
+          </div>
+          <div class="facility-item__name">On-Site Caretaker</div>
+          <div class="facility-item__desc">Around the clock</div>
+        </div>
+        <div class="facility-item">
+          <div class="facility-item__icon">
+            <svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+          </div>
+          <div class="facility-item__name">Kitchenette & Fridge</div>
+          <div class="facility-item__desc">Snacks & beverages</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     BOOKING HUB
+════════════════════════════════════════════════════════════ -->
+<section id="booking" class="section" style="background:white;border-top:1px solid var(--border)">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow label-sm">Reserve Your Slot</span>
+      <h2 class="display display-md">The Booking Hub</h2>
+      <p>Select your preferred slot and date. Prices update dynamically based on the season and day of the week.</p>
+    </div>
+
+    <div class="booking-hub">
+      <!-- Hub Header with Toggle -->
+      <div class="booking-hub__header">
+        <div>
+          <h3 class="booking-hub__title">Select Date & Slot</h3>
+          <p style="color:rgba(255,255,255,.5);font-size:.85rem;margin-top:.25rem">
+            Prices shown per 12-hour booking period
+          </p>
+        </div>
+        <div class="slot-toggle">
+          <button class="slot-toggle__btn active" onclick="setSlot('day', this)">
+            ☀ Morning to Evening<br>
+            <span style="font-size:.72rem;opacity:.7">8:00 AM – 8:00 PM</span>
+          </button>
+          <button class="slot-toggle__btn" onclick="setSlot('night', this)">
+            ☾ Evening to Morning<br>
+            <span style="font-size:.72rem;opacity:.7">8:00 PM – 8:00 AM</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Calendar Body -->
+      <div class="booking-hub__body">
+        <!-- Legend -->
+        <div class="calendar-legend">
+          <div class="legend-item"><div class="legend-dot legend-dot--available"></div><span>Available</span></div>
+          <div class="legend-item"><div class="legend-dot legend-dot--peak"></div><span>Peak Rate</span></div>
+          <div class="legend-item"><div class="legend-dot legend-dot--pending"></div><span>Pending Hold</span></div>
+          <div class="legend-item"><div class="legend-dot legend-dot--booked"></div><span>Booked</span></div>
+          <div class="legend-item"><div class="legend-dot legend-dot--closed"></div><span>Closed / Blackout</span></div>
+        </div>
+
+        <!-- Calendar -->
+        <div class="calendar">
+          <div class="calendar__nav">
+            <button class="calendar__arrow" onclick="changeMonth(-1)">&#8249;</button>
+            <div class="calendar__month" id="cal-month-label">June 2025</div>
+            <button class="calendar__arrow" onclick="changeMonth(1)">&#8250;</button>
+          </div>
+          <div class="calendar__grid">
+            <div class="calendar__weekday">Sun</div>
+            <div class="calendar__weekday">Mon</div>
+            <div class="calendar__weekday">Tue</div>
+            <div class="calendar__weekday">Wed</div>
+            <div class="calendar__weekday">Thu</div>
+            <div class="calendar__weekday">Fri</div>
+            <div class="calendar__weekday">Sat</div>
+            <div id="cal-days"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Summary Bar -->
+      <div class="booking-summary-bar">
+        <div class="summary-item">
+          <span class="summary-item__label">Selected Date</span>
+          <span class="summary-item__val" id="summary-date">—</span>
+        </div>
+        <div class="summary-divider"></div>
+        <div class="summary-item">
+          <span class="summary-item__label">Slot</span>
+          <span class="summary-item__val" id="summary-slot">Morning to Evening</span>
+        </div>
+        <div class="summary-divider"></div>
+        <div class="summary-item">
+          <span class="summary-item__label">Rate</span>
+          <span class="summary-item__val" id="summary-rate">—</span>
+        </div>
+        <div class="summary-divider"></div>
+        <div class="summary-item">
+          <span class="summary-item__label">Timing</span>
+          <span class="summary-item__val" id="summary-timing">8:00 AM – 8:00 PM</span>
+        </div>
+        <div class="summary-cta">
+          <button class="btn-book" id="book-btn" disabled style="opacity:.45" onclick="openBookingModal()">
+            Request to Hold
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     REVIEWS
+════════════════════════════════════════════════════════════ -->
+<section class="reviews-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="eyebrow label-sm">What Guests Say</span>
+      <h2 class="display display-md">Guest Reviews</h2>
+      <p>Real experiences from guests who've stayed at The Green Acre.</p>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-card__stars">★★★★★</div>
+        <p class="review-card__text">"Absolutely stunning property. The pool was spotlessly clean and truly private — we had it all to ourselves. The caretaker was incredibly helpful. Already planning our next visit!"</p>
+        <div class="review-card__author">
+          <div class="review-card__avatar">RS</div>
+          <div>
+            <div class="review-card__name">Rahul S.</div>
+            <div class="review-card__date">March 2025 · Family Trip</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-card__stars">★★★★★</div>
+        <p class="review-card__text">"Perfect weekend getaway for our friend group. The open ground was a highlight — we played cricket until midnight! Rooms were clean and AC worked great. Highly recommended."</p>
+        <div class="review-card__author">
+          <div class="review-card__avatar">PM</div>
+          <div>
+            <div class="review-card__name">Priya M.</div>
+            <div class="review-card__date">February 2025 · Group Outing</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-card__stars">★★★★★</div>
+        <p class="review-card__text">"Booked the night slot for a birthday party. The setting was magical under the stars. Kids loved the play area. Booking process was smooth and the WhatsApp confirmation was quick."</p>
+        <div class="review-card__author">
+          <div class="review-card__avatar">AK</div>
+          <div>
+            <div class="review-card__name">Amir K.</div>
+            <div class="review-card__date">January 2025 · Birthday Event</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__brand">The Green Acre</div>
+        <p class="footer__tagline">A private farmhouse retreat exclusively yours — pool, grounds, and complete serenity.</p>
+        <div style="margin-top:1.25rem">
+          <div class="map-wrap">
+            <span>📍 Google Map — Location Available on Booking</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer__col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="#amenities">Amenities</a></li>
+          <li><a href="#facilities">Popular Facilities</a></li>
+          <li><a href="#booking">Booking Hub</a></li>
+          <li><a href="#" onclick="openPolicyModal()">Rules & Policies</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Booking</h4>
+        <ul>
+          <li><a href="#booking">Check Availability</a></li>
+          <li><a href="#" onclick="openPolicyModal()">Cancellation Policy</a></li>
+          <li><a href="#" onclick="openPolicyModal()">Seasonal Rates</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span class="footer__copyright">© 2025 The Green Acre. All rights reserved.</span>
+      <a href="#" id="footer-wa-link" class="footer__whatsapp">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp Us
+      </a>
+    </div>
+  </div>
+</footer>
+
+<!-- ════════════════════════════════════════════════════════════
+     BOOKING REQUEST MODAL
+════════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="booking-modal">
+  <div class="modal">
+    <div class="modal__header">
+      <div>
+        <h2 class="modal__title">Request to Hold Slot</h2>
+        <p style="font-size:.85rem;color:var(--text-muted);margin-top:.25rem">Complete your details to reserve this date</p>
+      </div>
+      <button class="modal__close" onclick="closeModal('booking-modal')">✕</button>
+    </div>
+    <div class="modal__body">
+      <!-- Booking Summary -->
+      <div style="background:var(--bg);border-radius:var(--radius-md);padding:1rem;margin-bottom:1.25rem">
+        <div class="booking-detail-row">
+          <span class="booking-detail-row__label">Date</span>
+          <span class="booking-detail-row__val" id="modal-date">—</span>
+        </div>
+        <div class="booking-detail-row">
+          <span class="booking-detail-row__label">Slot</span>
+          <span class="booking-detail-row__val" id="modal-slot">Morning to Evening</span>
+        </div>
+        <div class="booking-detail-row">
+          <span class="booking-detail-row__label">Timing</span>
+          <span class="booking-detail-row__val" id="modal-timing">8:00 AM – 8:00 PM</span>
+        </div>
+      </div>
+      <div class="price-highlight">
+        <span class="price-highlight__label">Total Amount</span>
+        <div style="display:flex;align-items:center;gap:.75rem">
+          <span id="modal-peak-badge" style="display:none" class="peak-badge">Peak Rate</span>
+          <span class="price-highlight__amount" id="modal-price">₹7,000</span>
+        </div>
+      </div>
+      <p class="form-note" style="margin-bottom:1.25rem">
+        ⚠ This is a hold request only. Slot is confirmed only after the manager verifies your deposit.
+      </p>
+
+      <!-- Guest Form -->
+      <div class="form-group">
+        <label class="form-label">Full Name *</label>
+        <input type="text" class="form-input" placeholder="Your full name" id="guest-name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">WhatsApp Number *</label>
+        <input type="tel" class="form-input" placeholder="+91 XXXXX XXXXX" id="guest-phone">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input type="email" class="form-input" placeholder="your@email.com" id="guest-email">
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+        <div class="form-group">
+          <label class="form-label">Number of Guests *</label>
+          <input type="number" class="form-input" placeholder="e.g. 12" min="1" id="guest-count">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Occasion</label>
+          <input type="text" class="form-input" placeholder="Birthday, family trip…" id="guest-occasion">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Additional Notes</label>
+        <textarea class="form-textarea" placeholder="Any special requirements or questions…" id="guest-notes"></textarea>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:.5rem;margin-top:.5rem">
+        <input type="checkbox" id="policy-agree" style="margin-top:3px;accent-color:var(--green)">
+        <label for="policy-agree" style="font-size:.82rem;color:var(--text-muted);cursor:pointer">
+          I have read and agree to the <a href="#" onclick="openPolicyModal()" style="color:var(--green);text-decoration:underline">Guest Rules & Policies</a>
+        </label>
+      </div>
+    </div>
+    <div class="modal__footer">
+      <button class="btn-book" style="width:100%;justify-content:center" onclick="submitBookingRequest()">
+        Send Hold Request
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     CONFIRMATION MODAL (post-submit)
+════════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="confirm-modal">
+  <div class="modal">
+    <div class="confirm-card" style="max-width:100%;border-radius:var(--radius-xl);border:none;box-shadow:none">
+      <div class="confirm-card__top">
+        <div class="confirm-card__icon">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h1>Hold Requested!</h1>
+        <p>Your slot request has been received successfully.</p>
+        <div class="confirm-card__ref" id="confirm-ref">REF: GRN-2025-XXXX</div>
+      </div>
+      <div class="confirm-card__body">
+        <div style="background:var(--bg);border-radius:var(--radius-md);padding:1rem;margin-bottom:1.25rem" id="confirm-booking-details">
+          <!-- filled by JS -->
+        </div>
+        <h3 style="font-family:var(--font-display);font-size:1.1rem;font-weight:500;color:var(--slate);margin-bottom:.75rem">What happens next?</h3>
+        <div class="confirm-steps">
+          <div class="confirm-step">
+            <div class="confirm-step__num">1</div>
+            <div class="confirm-step__text">
+              <h4>Manager Review</h4>
+              <p>Our team reviews your request and contacts you within 2 hours via WhatsApp.</p>
+            </div>
+          </div>
+          <div class="confirm-step">
+            <div class="confirm-step__num">2</div>
+            <div class="confirm-step__text">
+              <h4>Deposit Confirmation</h4>
+              <p>Pay the advance deposit through the method shared by the manager to lock in your slot.</p>
+            </div>
+          </div>
+          <div class="confirm-step">
+            <div class="confirm-step__num">3</div>
+            <div class="confirm-step__text">
+              <h4>Booking Confirmed</h4>
+              <p>Your date is marked as BOOKED on our calendar. You'll receive a final confirmation message.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="confirm-card__footer">
+        <button id="view-status-btn" class="btn-primary" style="display:inline-flex;margin:0 auto .75rem;cursor:pointer;border:none">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          View Booking Status
+        </button>
+        <p style="font-size:.78rem;color:var(--text-muted)">
+          Keep your reference number handy. The manager will contact you via WhatsApp.
+        </p>
+        <button class="btn-outline" style="margin-top:.75rem;width:100%" onclick="closeModal('confirm-modal')">Back to Calendar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     POLICY MODAL
+════════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="policy-modal">
+  <div class="modal" style="max-width:620px">
+    <div class="modal__header">
+      <div>
+        <h2 class="modal__title">Guest Rules & Policies</h2>
+        <p style="font-size:.85rem;color:var(--text-muted);margin-top:.25rem">Please read carefully before booking</p>
+      </div>
+      <button class="modal__close" onclick="closeModal('policy-modal')">✕</button>
+    </div>
+    <div class="modal__body policy-modal-content">
+      <div class="policy-section">
+        <h3>Seasonal Rates</h3>
+        <table class="policy-rate-table">
+          <thead><tr><th>Date Type</th><th>Day Slot (8AM–8PM)</th><th>Night Slot (8PM–8AM)</th></tr></thead>
+          <tbody>
+            <tr><td>Standard Day (Mon–Thu)</td><td>₹6,000</td><td>₹7,000</td></tr>
+            <tr><td>Weekend (Fri–Sun)</td><td>₹7,500</td><td>₹9,000</td></tr>
+            <tr><td>Peak / Holiday (Holi, Diwali, Eid…)</td><td>₹10,000</td><td>₹12,000</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="policy-section">
+        <h3>Check-Out Policy</h3>
+        <ul>
+          <li>Guests must vacate the premises immediately at the conclusion of their 12-hour block (8:00 AM or 8:00 PM sharp).</li>
+          <li>Late check-out requests must be made 24 hours in advance and are subject to availability and additional charges.</li>
+          <li>The maintenance team requires time to prepare the property for the next group.</li>
+        </ul>
+      </div>
+      <div class="policy-section">
+        <h3>Cleanliness & Property Care</h3>
+        <ul>
+          <li>Trash must be discarded in designated disposal bins before departure.</li>
+          <li>Heavy stains on linens, upholstery, or surfaces will incur cleaning deduction charges.</li>
+          <li>Any property damage will be assessed and billed at replacement cost.</li>
+          <li>Outdoor areas including the pool deck, ground, and parking must be left tidy.</li>
+        </ul>
+      </div>
+      <div class="policy-section">
+        <h3>Pool & Amenities Safety</h3>
+        <ul>
+          <li>Appropriate swimming attire is required at all times in the pool.</li>
+          <li>Children must be supervised by adults at all times in the pool and kids' play zone.</li>
+          <li>No glass items are permitted within the pool area.</li>
+          <li>Swimming after consuming alcohol is strongly discouraged.</li>
+        </ul>
+      </div>
+      <div class="policy-section">
+        <h3>General House Rules</h3>
+        <ul>
+          <li>Music and outdoor activity must end by 11:00 PM out of respect for the surrounding area.</li>
+          <li>Guests are responsible for the behaviour of all individuals in their group.</li>
+          <li>The property is strictly no-smoking indoors. Smoking is permitted only in designated outdoor areas.</li>
+          <li>Pets are not permitted on the property.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="modal__footer">
+      <button class="btn-primary" style="width:100%;justify-content:center" onclick="closeModal('policy-modal')">I Understand</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════════════════════ -->
+<script>
+  /* ── CONFIG ──────────────────────────────────────────────── */
+  const API_BASE = window.GA_API_BASE || 'http://localhost:3001/api';
+
+  /* ── STATE ───────────────────────────────────────────────── */
+  let currentSlot = 'day';
+  let selectedDate = null;  // { day, dateStr, dayData }
+  let currentYear  = new Date().getFullYear();
+  let currentMonth = new Date().getMonth(); // 0-indexed
+  let calendarData = null;  // API response cache for current month
+  let isLoadingCal = false;
+
+  function fmt(n) { return '₹' + Number(n).toLocaleString('en-IN'); }
+
+  /* ── API HELPERS ─────────────────────────────────────────── */
+  async function apiFetch(path) {
+    const res = await fetch(API_BASE + path);
+    if (!res.ok) throw new Error(`API error: ${res.status}`);
+    return res.json();
+  }
+
+  /* ── SLOT TOGGLE ─────────────────────────────────────────── */
+  function setSlot(slot, btn) {
+    currentSlot = slot;
+    document.querySelectorAll('.slot-toggle__btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const timing   = slot === 'day' ? '8:00 AM – 8:00 PM' : '8:00 PM – 8:00 AM';
+    const slotLabel = slot === 'day' ? 'Morning to Evening' : 'Evening to Morning';
+    document.getElementById('summary-slot').textContent = slotLabel;
+    document.getElementById('summary-timing').textContent = timing;
+    if (calendarData) renderCalendarFromData(calendarData);
+    if (selectedDate) updateSummaryFromData(selectedDate.dayData, selectedDate.day);
+  }
+
+  /* ── CALENDAR ────────────────────────────────────────────── */
+  async function loadCalendar() {
+    if (isLoadingCal) return;
+    isLoadingCal = true;
+
+    const grid = document.getElementById('cal-days');
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--text-muted);font-size:.9rem">Loading availability…</div>';
+
+    const mm = String(currentMonth + 1).padStart(2, '0');
+    const monthStr = `${currentYear}-${mm}`;
+
+    try {
+      const data = await apiFetch(`/calendar?month=${monthStr}`);
+      calendarData = data;
+      renderCalendarFromData(data);
+    } catch (err) {
+      console.error('Calendar load error:', err);
+      grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;color:#ef4444;font-size:.9rem">Unable to load calendar. Please refresh.</div>';
+    } finally {
+      isLoadingCal = false;
+    }
+  }
+
+  function renderCalendarFromData(data) {
+    const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    document.getElementById('cal-month-label').textContent = monthNames[currentMonth] + ' ' + currentYear;
+
+    const grid = document.getElementById('cal-days');
+    grid.style.display = 'contents';
+    grid.innerHTML = '';
+
+    // Blank cells before first day of month
+    const firstDayOfWeek = data.days.length > 0 ? data.days[0].dayOfWeek : new Date(currentYear, currentMonth, 1).getDay();
+    for (let i = 0; i < firstDayOfWeek; i++) {
+      const blank = document.createElement('div');
+      blank.className = 'cal-day cal-day--other-month';
+      grid.appendChild(blank);
+    }
+
+    const today = new Date().toISOString().split('T')[0];
+
+    data.days.forEach(dayData => {
+      const slotData = currentSlot === 'day' ? dayData.daySlot : dayData.nightSlot;
+      const status   = slotData.status; // available | booked | pending | closed | past
+      const rate     = slotData.rate;
+      const d        = dayData.day;
+
+      const div = document.createElement('div');
+
+      // Past dates
+      if (status === 'past') {
+        div.className = 'cal-day cal-day--other-month cal-day--disabled';
+        const num = document.createElement('div');
+        num.className = 'cal-day__num';
+        num.textContent = d;
+        div.appendChild(num);
+        grid.appendChild(div);
+        return;
+      }
+
+      if (status === 'booked') {
+        div.className = 'cal-day cal-day--booked cal-day--disabled';
+        div.innerHTML = `<div class="cal-day__num">${d}</div><div class="cal-day__tag">Booked</div><div class="cal-day__strike"></div>`;
+      } else if (status === 'pending') {
+        div.className = 'cal-day cal-day--pending cal-day--disabled';
+        div.innerHTML = `<div class="cal-day__num">${d}</div><div class="cal-day__tag">Hold</div>`;
+      } else if (status === 'closed') {
+        div.className = 'cal-day cal-day--closed cal-day--disabled';
+        div.innerHTML = `<div class="cal-day__num">${d}</div><div class="cal-day__tag">Locked</div><div class="cal-day__closed-label">[Closed]</div>`;
+      } else {
+        // Available
+        const isPeak = ['HOLI','DIWALI','EID','CHRISTMAS','NEW_YEAR','PEAK'].includes(dayData.label);
+        div.className = 'cal-day' + (isPeak ? ' cal-day--peak' : '');
+        const num = document.createElement('div');
+        num.className = 'cal-day__num';
+        num.textContent = d;
+        div.appendChild(num);
+
+        if (isPeak) {
+          const tag = document.createElement('div');
+          tag.className = 'cal-day__tag';
+          tag.textContent = dayData.label.charAt(0) + dayData.label.slice(1).toLowerCase();
+          div.appendChild(tag);
+        }
+
+        const price = document.createElement('div');
+        price.className = 'cal-day__price';
+        price.textContent = fmt(rate);
+        div.appendChild(price);
+
+        div.addEventListener('click', () => selectDate(d, dayData));
+      }
+
+      grid.appendChild(div);
+    });
+  }
+
+  function changeMonth(dir) {
+    currentMonth += dir;
+    if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+    if (currentMonth < 0)  { currentMonth = 11; currentYear--; }
+    selectedDate = null;
+    calendarData = null;
+    document.getElementById('summary-date').textContent = '—';
+    document.getElementById('summary-rate').textContent = '—';
+    document.getElementById('book-btn').disabled = true;
+    document.getElementById('book-btn').style.opacity = '.45';
+    loadCalendar();
+  }
+
+  function selectDate(day, dayData) {
+    selectedDate = { day, dayData, dateStr: dayData.date };
+    updateSummaryFromData(dayData, day);
+    // Highlight selected
+    document.querySelectorAll('.cal-day').forEach(el => el.style.outline = '');
+    const cells = document.querySelectorAll('#cal-days .cal-day');
+    const firstDayOfWeek = calendarData ? calendarData.days[0].dayOfWeek : new Date(currentYear, currentMonth, 1).getDay();
+    const target = cells[firstDayOfWeek + day - 1];
+    if (target) target.style.outline = '2.5px solid var(--green)';
+  }
+
+  function updateSummaryFromData(dayData, day) {
+    const slotData  = currentSlot === 'day' ? dayData.daySlot : dayData.nightSlot;
+    const rate      = slotData.rate;
+    const isPeak    = ['HOLI','DIWALI','EID','CHRISTMAS','NEW_YEAR','PEAK'].includes(dayData.label);
+    const slotLabel = currentSlot === 'day' ? 'Morning to Evening' : 'Evening to Morning';
+    const timing    = currentSlot === 'day' ? '8:00 AM – 8:00 PM' : '8:00 PM – 8:00 AM';
+    const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+    document.getElementById('summary-date').textContent = day + ' ' + monthNames[currentMonth] + ' ' + currentYear;
+    document.getElementById('summary-rate').textContent = fmt(rate) + (isPeak ? ' (' + dayData.label + ')' : '');
+    document.getElementById('book-btn').disabled = false;
+    document.getElementById('book-btn').style.opacity = '1';
+    // Pre-fill modal
+    document.getElementById('modal-date').textContent    = day + ' ' + monthNames[currentMonth] + ' ' + currentYear;
+    document.getElementById('modal-slot').textContent    = slotLabel;
+    document.getElementById('modal-timing').textContent  = timing;
+    document.getElementById('modal-price').textContent   = fmt(rate);
+    const badge = document.getElementById('modal-peak-badge');
+    badge.style.display = isPeak ? 'inline-flex' : 'none';
+  }
+
+  /* ── MODALS ──────────────────────────────────────────────── */
+  function openBookingModal() {
+    if (!selectedDate) return;
+    document.getElementById('booking-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  async function openPolicyModal() {
+    document.getElementById('policy-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    // Load dynamic policy content
+    try {
+      const data = await apiFetch('/policy');
+      if (data.policies && data.policies.length > 0) {
+        const container = document.querySelector('.policy-modal-content');
+        if (container) {
+          container.innerHTML = data.policies.map(p => `
+            <div class="policy-section">
+              <h3>${escHtml(p.title)}</h3>
+              <div style="white-space:pre-line;font-size:.9rem;line-height:1.7;color:var(--text)">${escHtml(p.content_text)}</div>
+            </div>
+          `).join('');
+        }
+      }
+    } catch (e) { /* keep static content on error */ }
+  }
+
+  function escHtml(str) {
+    const d = document.createElement('div');
+    d.textContent = str;
+    return d.innerHTML;
+  }
+
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.modal-overlay').forEach(el => {
+    el.addEventListener('click', e => { if (e.target === el) closeModal(el.id); });
+  });
+
+  /* ── BOOKING SUBMIT ──────────────────────────────────────── */
+  async function submitBookingRequest() {
+    const name     = document.getElementById('guest-name').value.trim();
+    const phone    = document.getElementById('guest-phone').value.trim();
+    const email    = document.getElementById('guest-email').value.trim();
+    const count    = document.getElementById('guest-count').value.trim();
+    const occasion = document.getElementById('guest-occasion').value.trim();
+    const notes    = document.getElementById('guest-notes').value.trim();
+    const agreed   = document.getElementById('policy-agree').checked;
+
+    if (!name || !phone) { showError('Please fill in your name and WhatsApp number.'); return; }
+    if (!agreed) { showError('Please agree to the Guest Rules & Policies to continue.'); return; }
+    if (!selectedDate) { showError('Please select a date first.'); return; }
+
+    const submitBtn = document.querySelector('.btn-book');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting…';
+
+    try {
+      const res = await fetch(API_BASE + '/bookings/request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          guestName:   name,
+          guestPhone:  phone,
+          guestEmail:  email || null,
+          guestCount:  parseInt(count) || 1,
+          occasion:    occasion || null,
+          notes:       notes || null,
+          bookingDate: selectedDate.dateStr,
+          slot:        currentSlot,
+          policyAgreed: agreed,
+        })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        showError(data.error || 'Booking failed. Please try again.');
+        return;
+      }
+
+      // Success — show confirmation modal
+      const slotData   = currentSlot === 'day' ? selectedDate.dayData.daySlot : selectedDate.dayData.nightSlot;
+      const rate       = slotData.rate;
+      const timing     = currentSlot === 'day' ? '8:00 AM – 8:00 PM' : '8:00 PM – 8:00 AM';
+      const slotLabel  = currentSlot === 'day' ? 'Morning to Evening' : 'Evening to Morning';
+      const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+      document.getElementById('confirm-ref').textContent = 'REF: ' + data.reference;
+      document.getElementById('confirm-booking-details').innerHTML = `
+        <div class="booking-detail-row"><span class="booking-detail-row__label">Name</span><span class="booking-detail-row__val">${escHtml(name)}</span></div>
+        <div class="booking-detail-row"><span class="booking-detail-row__label">WhatsApp</span><span class="booking-detail-row__val">${escHtml(phone)}</span></div>
+        <div class="booking-detail-row"><span class="booking-detail-row__label">Date</span><span class="booking-detail-row__val">${selectedDate.day} ${monthNames[currentMonth]} ${currentYear}</span></div>
+        <div class="booking-detail-row"><span class="booking-detail-row__label">Slot</span><span class="booking-detail-row__val">${slotLabel} · ${timing}</span></div>
+        <div class="booking-detail-row" style="border:none"><span class="booking-detail-row__label">Amount</span><span class="booking-detail-row__val" style="color:var(--green);font-size:1.1rem">${fmt(rate)}</span></div>
+      `;
+
+      // Store reference for redirect
+      sessionStorage.setItem('ga_booking_ref', data.reference);
+
+      closeModal('booking-modal');
+      document.getElementById('confirm-modal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+
+      // Wire the "View Status" button
+      const statusBtn = document.getElementById('view-status-btn');
+      if (statusBtn) {
+        statusBtn.onclick = () => {
+          window.location.href = 'booking-status.html?ref=' + data.reference;
+        };
+      }
+
+      // Refresh calendar to show pending slot
+      calendarData = null;
+      loadCalendar();
+
+    } catch (err) {
+      console.error('Booking submit error:', err);
+      showError('Network error. Please check your connection and try again.');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit Booking Request';
+    }
+  }
+
+  function showError(msg) {
+    let errEl = document.getElementById('booking-form-error');
+    if (!errEl) {
+      errEl = document.createElement('div');
+      errEl.id = 'booking-form-error';
+      errEl.style.cssText = 'color:#ef4444;font-size:.85rem;padding:.6rem .8rem;background:#fef2f2;border:1px solid #fecaca;border-radius:6px;margin-bottom:1rem;';
+      const btn = document.querySelector('.btn-book');
+      btn.parentNode.insertBefore(errEl, btn);
+    }
+    errEl.textContent = msg;
+    errEl.style.display = 'block';
+    setTimeout(() => { errEl.style.display = 'none'; }, 6000);
+  }
+
+  /* ── REVIEWS CAROUSEL ────────────────────────────────────── */
+  async function loadReviews() {
+    try {
+      const data = await apiFetch('/reviews');
+      if (!data.reviews || data.reviews.length === 0) return;
+
+      const track = document.querySelector('.testimonials-track');
+      if (!track) return;
+
+      // Replace static reviews with live data
+      const stars = (n) => '★'.repeat(n) + '☆'.repeat(5-n);
+      track.innerHTML = data.reviews.map(r => `
+        <div class="testimonial-card">
+          <div class="testimonial-card__stars">${stars(r.rating)}</div>
+          <p class="testimonial-card__text">"${escHtml(r.review_text)}"</p>
+          <div class="testimonial-card__author">
+            <div class="testimonial-card__avatar">${escHtml(r.guest_name.charAt(0))}</div>
+            <div>
+              <div class="testimonial-card__name">${escHtml(r.guest_name)}</div>
+              ${r.occasion ? `<div class="testimonial-card__occasion">${escHtml(r.occasion)}</div>` : ''}
+            </div>
+          </div>
+        </div>
+      `).join('');
+    } catch (e) { /* keep static reviews */ }
+  }
+
+  /* ── INIT ────────────────────────────────────────────────── */
+  loadCalendar();
+  loadReviews();
+
+  // Load WhatsApp number for footer/contact links from property content
+  (async () => {
+    try {
+      const res = await fetch(API_BASE + '/policy'); // reuse a public endpoint
+      // Attempt to get manager WhatsApp from a content endpoint if available
+      // Falls back to a generic wa.me link if not available
+    } catch(e) {}
+    // Set footer WhatsApp link — will use config.js GA_API_BASE domain inference
+    const waLink = document.getElementById('footer-wa-link');
+    if (waLink && waLink.href === window.location.href.split('?')[0] + '#') {
+      waLink.href = 'https://wa.me/919876543210'; // default; overridden by admin settings
+    }
+  })();
+</script>
+</body>
+</html>

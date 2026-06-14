@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booking Status — The Green Acre</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .status-page { min-height: 100vh; background: var(--bg); padding-top: var(--nav-h); }
+    .sb-hero { background: var(--slate); padding: 2.5rem 0 0; }
+    .sb-hero__inner { max-width: 760px; margin: 0 auto; padding: 0 2rem; }
+    .sb-ref-label { font-size: .72rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.35); margin-bottom: .5rem; }
+    .sb-ref-title { font-family: var(--font-display); font-size: 2.2rem; font-weight: 300; color: white; margin-bottom: .25rem; }
+    .sb-submitted { font-size: .85rem; color: rgba(255,255,255,.4); margin-bottom: 1.5rem; }
+    .sb-top-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; }
+    .sb-status-pill { display: inline-flex; align-items: center; gap: 6px; padding: .45rem 1rem; border-radius: 100px; font-size: .82rem; font-weight: 500; }
+    .sb-status-pill--pending { background: #FFEDD5; color: #9a3412; }
+    .sb-status-pill--confirmed { background: #dcfce7; color: #14532d; }
+    .sb-status-pill--released { background: var(--booked-bg); color: var(--booked-text); }
+    .sb-status-pill svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2.5; }
+    .status-tracker { display: flex; align-items: flex-start; }
+    .tracker-step { display: flex; flex-direction: column; align-items: center; flex: 1; position: relative; padding-bottom: 1.5rem; }
+    .tracker-step::after { content: ""; position: absolute; top: 17px; left: 50%; width: 100%; height: 2px; background: rgba(255,255,255,.1); z-index: 0; }
+    .tracker-step:last-child::after { display: none; }
+    .tracker-step.done::after { background: var(--green); }
+    .tracker-dot { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 1; flex-shrink: 0; }
+    .tracker-dot--done    { background: var(--green); }
+    .tracker-dot--active  { background: var(--green-mid); border: 2px solid rgba(255,255,255,.25); }
+    .tracker-dot--waiting { background: rgba(255,255,255,.07); }
+    .tracker-dot svg { width: 14px; height: 14px; stroke: white; fill: none; stroke-width: 2.5; }
+    .tracker-dot span { font-size: .8rem; font-weight: 500; color: rgba(255,255,255,.35); }
+    .tracker-label { font-size: .78rem; font-weight: 500; margin-top: .5rem; color: rgba(255,255,255,.4); text-align: center; }
+    .tracker-label.done, .tracker-label.active { color: rgba(255,255,255,.85); }
+    .tracker-time { font-size: .7rem; color: rgba(255,255,255,.28); margin-top: .15rem; text-align: center; }
+    .tracker-time.done { color: rgba(255,255,255,.4); }
+    .sb-body { max-width: 760px; margin: 0 auto; padding: 2rem; display: grid; grid-template-columns: 1.6fr 1fr; gap: 1.25rem; align-items: start; }
+    .sb-card { background: white; border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 1rem; }
+    .sb-card__head { padding: .85rem 1.25rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    .sb-card__title { font-size: .9rem; font-weight: 500; color: var(--slate); }
+    .sb-card__meta { font-size: .78rem; color: var(--text-muted); }
+    .sb-card__body { padding: 1rem 1.25rem; }
+    .sb-dr { display: flex; justify-content: space-between; align-items: flex-start; padding: .55rem 0; border-bottom: 1px solid var(--border); gap: 1rem; }
+    .sb-dr:last-child { border-bottom: none; }
+    .sb-dr__label { font-size: .82rem; color: var(--text-muted); display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
+    .sb-dr__label svg { width: 12px; height: 12px; stroke: var(--text-muted); fill: none; stroke-width: 2; }
+    .sb-dr__val { font-size: .82rem; font-weight: 500; color: var(--slate); text-align: right; }
+    .sb-amount-band { background: var(--green-light); border-radius: var(--radius-sm); padding: .85rem 1rem; display: flex; align-items: center; justify-content: space-between; margin-top: .75rem; }
+    .sb-amount-label { font-size: .82rem; font-weight: 500; color: var(--green); }
+    .sb-amount-val { font-family: var(--font-display); font-size: 1.6rem; color: var(--green); }
+    .notice-box { border-radius: var(--radius-sm); padding: .75rem 1rem; display: flex; gap: .65rem; align-items: flex-start; margin-bottom: 1rem; }
+    .notice-box--warning { background: #FEF3C7; border: 1px solid rgba(217,119,6,.2); }
+    .notice-box--success { background: #dcfce7; border: 1px solid rgba(22,163,74,.2); }
+    .notice-box svg { width: 14px; height: 14px; flex-shrink: 0; margin-top: 1px; fill: none; stroke-width: 2; }
+    .notice-box--warning svg { stroke: #92400E; }
+    .notice-box--success svg { stroke: #14532d; }
+    .notice-box p { font-size: .82rem; line-height: 1.55; }
+    .notice-box--warning p { color: #92400E; }
+    .notice-box--success p { color: #14532d; }
+    .guest-av { width: 34px; height: 34px; border-radius: 50%; background: var(--green-light); display: flex; align-items: center; justify-content: center; font-size: .82rem; font-weight: 600; color: var(--green); flex-shrink: 0; }
+    .prop-img-placeholder { background: linear-gradient(145deg, #c8ddd8 0%, #a3c4ba 100%); border-radius: var(--radius-sm); height: 80px; display: flex; align-items: center; justify-content: center; margin-bottom: .75rem; }
+    .prop-img-placeholder svg { width: 26px; height: 26px; stroke: var(--green); fill: none; stroke-width: 1.5; opacity: .4; }
+    .prop-chips { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .5rem; }
+    .prop-chip { background: var(--green-light); color: var(--green); padding: .2rem .55rem; border-radius: 100px; font-size: .7rem; font-weight: 500; }
+    .copy-ref-box { display: flex; align-items: center; gap: .5rem; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: .5rem .75rem; }
+    .copy-ref-box code { font-size: .8rem; font-family: monospace; color: rgba(26,37,48,.65); flex: 1; }
+    .copy-ref-btn { font-size: .75rem; color: var(--green); font-weight: 500; cursor: pointer; white-space: nowrap; }
+    .action-stack { display: flex; flex-direction: column; gap: .6rem; }
+    .btn-wa { background: var(--green); color: white; padding: .75rem 1rem; border-radius: var(--radius-sm); font-size: .88rem; font-weight: 500; text-align: center; display: flex; align-items: center; justify-content: center; gap: 7px; cursor: pointer; text-decoration: none; }
+    .btn-wa svg { width: 14px; height: 14px; fill: white; }
+    .btn-outline-action { border: 1px solid var(--border); color: rgba(26,37,48,.65); padding: .7rem 1rem; border-radius: var(--radius-sm); font-size: .85rem; text-align: center; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; background: white; font-family: inherit; }
+    .btn-outline-action svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .btn-outline-action--danger { color: #dc2626; border-color: rgba(220,38,38,.2); }
+    @media (max-width: 640px) { .sb-body { grid-template-columns: 1fr; } .sb-top-row { flex-direction: column; } }
+  </style>
+  <script src="config.js"></script>
+</head>
+<body class="status-page">
+
+<!-- NAV — Antigravity AI: reuse nav component from index.html -->
+<nav class="nav">
+  <div class="container nav__inner">
+    <a href="/" class="nav__logo">
+      <div class="nav__logo-mark">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      </div>
+      <span class="nav__brand">The Green Acre</span>
+    </a>
+    <a href="/" class="btn-outline" style="font-size:.85rem;padding:.5rem 1rem">← Back to Home</a>
+  </div>
+</nav>
+
+<!-- HERO BAND
+     Antigravity AI: read ?ref= from URL, call GET /api/bookings/:ref,
+     populate all [data-bind] elements, update tracker based on booking.status,
+     poll every 60 seconds -->
+<div class="sb-hero">
+  <div class="sb-hero__inner">
+    <div class="sb-top-row">
+      <div>
+        <div class="sb-ref-label">Booking Reference</div>
+        <div class="sb-ref-title" data-bind="referenceId">—</div>
+        <div class="sb-submitted" data-bind="submittedAt">Submitted 14 June 2025 · 11:42 AM</div>
+      </div>
+      <div class="sb-status-pill sb-status-pill--pending" id="status-pill">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span id="status-text">Awaiting confirmation</span>
+      </div>
+    </div>
+
+    <!-- 4-STEP STATUS TRACKER
+         Tracker step classes to apply based on booking.status:
+         PENDING    → steps 1,2 done; 3,4 waiting
+         CONFIRMED  → all 4 steps done
+         RELEASED   → only step 1 done; rest greyed -->
+    <div class="status-tracker">
+      <div class="tracker-step done" id="step-1">
+        <div class="tracker-dot tracker-dot--done">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="tracker-label done">Request sent</div>
+        <div class="tracker-time done" data-bind="sentTime">11:42 AM</div>
+      </div>
+      <div class="tracker-step done" id="step-2">
+        <div class="tracker-dot tracker-dot--active">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="tracker-label active">Manager review</div>
+        <div class="tracker-time done">In progress</div>
+      </div>
+      <div class="tracker-step" id="step-3">
+        <div class="tracker-dot tracker-dot--waiting"><span>3</span></div>
+        <div class="tracker-label">Deposit received</div>
+        <div class="tracker-time">Pending</div>
+      </div>
+      <div class="tracker-step" id="step-4">
+        <div class="tracker-dot tracker-dot--waiting">
+          <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div class="tracker-label">Booking confirmed</div>
+        <div class="tracker-time">Pending</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN BODY -->
+<div class="sb-body">
+
+  <!-- LEFT COLUMN -->
+  <div>
+    <div class="sb-card">
+      <div class="sb-card__head">
+        <span class="sb-card__title">Booking details</span>
+        <span class="sb-card__meta" data-bind="bookingDate">14 June 2025</span>
+      </div>
+      <div class="sb-card__body">
+        <div class="sb-dr">
+          <span class="sb-dr__label"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Date</span>
+          <span class="sb-dr__val" data-bind="bookingDateLong">Saturday, 14 June 2025</span>
+        </div>
+        <div class="sb-dr">
+          <span class="sb-dr__label"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Slot</span>
+          <span class="sb-dr__val" data-bind="slotLabel">Morning to Evening</span>
+        </div>
+        <div class="sb-dr">
+          <span class="sb-dr__label"><svg viewBox="0 0 24 24"><polyline points="17 2 17 7 22 7"/><path d="M2 12A10 10 0 0117 2"/></svg>Timing</span>
+          <span class="sb-dr__val" data-bind="timing">8:00 AM – 8:00 PM</span>
+        </div>
+        <div class="sb-dr">
+          <span class="sb-dr__label"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Guests</span>
+          <span class="sb-dr__val" data-bind="guestCount">14 guests</span>
+        </div>
+        <div class="sb-dr">
+          <span class="sb-dr__label"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>Occasion</span>
+          <span class="sb-dr__val" data-bind="occasion">Birthday Party</span>
+        </div>
+        <div class="sb-amount-band">
+          <span class="sb-amount-label">Total amount</span>
+          <div style="display:flex;align-items:center;gap:.6rem">
+            <span class="peak-badge" id="rate-badge" style="display:none">Peak Rate</span>
+            <span class="sb-amount-val" data-bind="rateAmount">₹10,000</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="notice-box notice-box--warning" id="notice-box">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <p id="notice-text">Your slot is currently on hold. The manager will contact you on WhatsApp within 2 hours to confirm deposit details. The slot remains held for 48 hours.</p>
+    </div>
+
+    <div class="sb-card">
+      <div class="sb-card__head"><span class="sb-card__title">Guest information</span></div>
+      <div class="sb-card__body">
+        <div style="display:flex;align-items:center;gap:.75rem;margin-bottom:.75rem">
+          <div class="guest-av" data-bind="guestInitials">RS</div>
+          <div>
+            <div style="font-size:.9rem;font-weight:500;color:var(--slate)" data-bind="guestName">Rahul Sharma</div>
+            <div style="font-size:.8rem;color:var(--text-muted)" data-bind="guestPhone">+91 98765 43210</div>
+          </div>
+        </div>
+        <div class="sb-dr"><span class="sb-dr__label">Email</span><span class="sb-dr__val" data-bind="guestEmail">rahul@email.com</span></div>
+        <div class="sb-dr" style="border:none"><span class="sb-dr__label">Notes</span><span class="sb-dr__val" style="font-size:.8rem;color:var(--text-muted);text-align:right;max-width:200px" data-bind="notes">Bonfire setup requested</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT COLUMN -->
+  <div>
+    <div class="sb-card" style="margin-bottom:1rem">
+      <div class="sb-card__head"><span class="sb-card__title">The Green Acre</span></div>
+      <div class="sb-card__body">
+        <div class="prop-img-placeholder">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+        </div>
+        <div style="font-family:var(--font-display);font-size:1.1rem;color:var(--slate);margin-bottom:.25rem">The Green Acre</div>
+        <div style="font-size:.8rem;color:var(--text-muted);margin-bottom:.6rem">Nagpur, Maharashtra</div>
+        <div class="prop-chips">
+          <span class="prop-chip">Private Pool</span>
+          <span class="prop-chip">AC Rooms</span>
+          <span class="prop-chip">Parking</span>
+          <span class="prop-chip">24/7 Power</span>
+        </div>
+        <div style="margin-top:.75rem;font-size:.78rem;color:var(--text-muted);line-height:1.5">Full address shared by manager upon booking confirmation.</div>
+      </div>
+    </div>
+
+    <div class="sb-card" style="margin-bottom:1rem">
+      <div class="sb-card__head"><span class="sb-card__title">Your reference</span></div>
+      <div class="sb-card__body">
+        <div class="copy-ref-box">
+          <code data-bind="referenceId">—</code>
+          <span class="copy-ref-btn" onclick="copyRef()">Copy</span>
+        </div>
+        <div style="font-size:.78rem;color:var(--text-muted);margin-top:.6rem;line-height:1.5">Share this when messaging the manager on WhatsApp.</div>
+      </div>
+    </div>
+
+    <div class="action-stack">
+      <a href="#" id="wa-manager-btn" class="btn-wa">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
+        Chat on WhatsApp
+      </a>
+      <button class="btn-outline-action" onclick="window.print()">
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download Receipt
+      </button>
+      <button class="btn-outline-action btn-outline-action--danger" onclick="cancelRequest()">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+        Cancel Request
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const API_BASE  = window.GA_API_BASE || 'http://localhost:3001/api';
+  const urlParams = new URLSearchParams(window.location.search);
+  const REF_ID    = urlParams.get('ref') || '';
+
+  // If ref from URL, show it immediately
+  if (REF_ID) {
+    document.querySelectorAll('[data-bind="referenceId"]').forEach(el => el.textContent = REF_ID);
+    document.getElementById('ref-input') && (document.getElementById('ref-input').value = REF_ID);
+  }
+
+  function fmt(n) { return '₹' + Number(n).toLocaleString('en-IN'); }
+
+  function bindData(data) {
+    // Bind all data-bind elements
+    const map = {
+      referenceId:  data.reference,
+      guestName:    data.guestName,
+      guestPhone:   data.guestPhone,
+      guestCount:   data.guestCount + (data.guestCount === 1 ? ' guest' : ' guests'),
+      occasion:     data.occasion || '—',
+      bookingDate:  new Date(data.bookingDate + 'T00:00:00').toLocaleDateString('en-IN', { weekday:'long', day:'numeric', month:'long', year:'numeric' }),
+      slotTime:     data.slotTime || (data.slot === 'day' ? '8:00 AM – 8:00 PM' : '8:00 PM – 8:00 AM'),
+      rateApplied:  fmt(data.rateApplied),
+    };
+    document.querySelectorAll('[data-bind]').forEach(el => {
+      const key = el.getAttribute('data-bind');
+      if (map[key] !== undefined) el.textContent = map[key];
+    });
+
+    // Status pill
+    const pill = document.getElementById('status-pill');
+    const txt  = document.getElementById('status-text');
+    pill.className = 'sb-status-pill';
+
+    if (data.status === 'CONFIRMED') {
+      pill.classList.add('sb-status-pill--confirmed');
+      txt.textContent = 'Booking confirmed';
+      setTracker('confirmed');
+      showNotice('success', '✅ Your booking is confirmed! The manager will share the property address and check-in details on WhatsApp shortly.');
+    } else if (data.status === 'RELEASED' || data.status === 'CANCELLED') {
+      pill.classList.add('sb-status-pill--released');
+      txt.textContent = 'Request released';
+      setTracker('released');
+      showNotice('warning', '⚠️ This booking request was released. The date is now available again. Please submit a new request or contact us on WhatsApp.');
+    } else {
+      pill.classList.add('sb-status-pill--pending');
+      txt.textContent = 'Awaiting confirmation';
+      setTracker('pending');
+    }
+
+    // Peak badge
+    const peakLabels = ['HOLI','DIWALI','EID','CHRISTMAS','NEW_YEAR','PEAK'];
+    const badge = document.getElementById('rate-badge');
+    if (badge) badge.style.display = peakLabels.includes(data.rateLabel) ? 'inline-flex' : 'none';
+
+    // WhatsApp link for manager
+    if (data.whatsappLink) {
+      const waBtn = document.getElementById('wa-manager-btn');
+      if (waBtn) waBtn.href = data.whatsappLink;
+    }
+  }
+
+  function setTracker(status) {
+    const steps = ['step-1','step-2','step-3','step-4'];
+    // step-1 = submitted, step-2 = under review, step-3 = confirmed, step-4 = ready
+    let doneUntil = 1;
+    if (status === 'pending')   doneUntil = 2;
+    if (status === 'confirmed') doneUntil = 4;
+    if (status === 'released')  doneUntil = 0;
+
+    steps.forEach((id, i) => {
+      const el  = document.getElementById(id);
+      if (!el) return;
+      const dot   = el.querySelector('.tracker-dot');
+      const label = el.querySelector('.tracker-label');
+      const time  = el.querySelector('.tracker-time');
+
+      if (i < doneUntil) {
+        el.classList.add('done');
+        if (dot)   { dot.className = 'tracker-dot tracker-dot--done'; dot.innerHTML = '<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>'; }
+        if (label) label.classList.add('done');
+        if (time)  time.classList.add('done');
+      } else {
+        el.classList.remove('done');
+        if (dot)   { dot.className = 'tracker-dot' + (i === doneUntil ? ' tracker-dot--active' : ''); dot.innerHTML = (i + 1).toString(); }
+        if (label) label.classList.remove('done');
+        if (time)  time.classList.remove('done');
+      }
+    });
+  }
+
+  function showNotice(type, message) {
+    const box = document.getElementById('notice-box');
+    const txt = document.getElementById('notice-text');
+    if (!box || !txt) return;
+    box.className = 'notice-box notice-box--' + (type === 'success' ? 'success' : 'warning');
+    box.style.display = 'block';
+    txt.textContent = message;
+  }
+
+  function copyRef() {
+    const ref = REF_ID || document.getElementById('ref-input')?.value;
+    if (!ref) return;
+    navigator.clipboard.writeText(ref).then(() => {
+      const btn = document.querySelector('.copy-ref-btn');
+      if (btn) { btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy', 2000); }
+    });
+  }
+
+  async function lookupBooking() {
+    const refInput = document.getElementById('ref-input');
+    const ref = refInput ? refInput.value.trim().toUpperCase() : REF_ID;
+    if (!ref) { showNotice('warning', 'Please enter a booking reference number.'); return; }
+    if (!/^GRN-\d{4}-\d{4}$/.test(ref)) { showNotice('warning', 'Invalid reference format. Expected: GRN-YYYY-NNNN'); return; }
+
+    const btn = document.getElementById('lookup-btn');
+    if (btn) { btn.disabled = true; btn.textContent = 'Looking up…'; }
+
+    try {
+      const res = await fetch(API_BASE + '/bookings/' + ref);
+      if (res.status === 404) { showNotice('warning', 'No booking found for reference: ' + ref); return; }
+      if (!res.ok) { showNotice('warning', 'Error looking up booking. Please try again.'); return; }
+      const data = await res.json();
+      bindData(data);
+      // Update URL without reload
+      history.replaceState(null, '', '?ref=' + ref);
+    } catch (err) {
+      showNotice('warning', 'Network error. Please check your connection and try again.');
+    } finally {
+      if (btn) { btn.disabled = false; btn.textContent = 'Check Status'; }
+    }
+  }
+
+  async function fetchBookingStatus() {
+    if (!REF_ID || !/^GRN-\d{4}-\d{4}$/.test(REF_ID)) return;
+    try {
+      const res  = await fetch(API_BASE + '/bookings/' + REF_ID);
+      if (!res.ok) throw new Error('Not found');
+      const data = await res.json();
+      bindData(data);
+    } catch (err) {
+      console.warn('Status fetch failed:', err.message);
+    }
+  }
+
+  // Auto-load if ref in URL
+  if (REF_ID) {
+    fetchBookingStatus();
+    setInterval(fetchBookingStatus, 60000);
+  }
+</script>
+</body>
+</html>

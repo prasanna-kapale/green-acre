@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manager Login — The Green Acre</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="config.js"></script>
+</head>
+<body>
+<div class="login-page">
+  <div class="login-card">
+    <div class="login-card__logo">
+      <div class="login-card__logo-mark">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      </div>
+      <div class="login-card__title">Manager Access</div>
+      <div class="login-card__sub">The Green Acre · Admin Control Panel</div>
+    </div>
+    <div class="login-card__divider"></div>
+    <div id="login-error" style="display:none;color:#ef4444;font-size:.85rem;padding:.6rem .8rem;background:#fef2f2;border:1px solid #fecaca;border-radius:6px;margin-bottom:1rem;"></div>
+    <div class="form-group">
+      <label class="form-label">Username</label>
+      <input type="text" class="form-input" id="login-username" placeholder="manager@greenacre" autocomplete="username">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input type="password" class="form-input" id="login-password" placeholder="••••••••" autocomplete="current-password">
+    </div>
+    <div style="margin-bottom:1.5rem"></div>
+    <button id="login-btn" class="btn-primary" style="display:flex;justify-content:center;gap:8px;width:100%;border:none;cursor:pointer">
+      Sign In to Dashboard
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </button>
+    <p class="login-card__note">
+      This is a private admin interface. Access is restricted to authorised managers only.
+      The URL is not publicly listed anywhere on the guest-facing website.
+    </p>
+  </div>
+</div>
+
+<script>
+  const API_BASE = window.GA_API_BASE || 'http://localhost:3001/api';
+
+  // Redirect if already logged in
+  const existingToken = localStorage.getItem('ga_jwt');
+  if (existingToken) {
+    fetch(API_BASE + '/auth/verify', {
+      headers: { 'Authorization': 'Bearer ' + existingToken }
+    }).then(r => {
+      if (r.ok) window.location.href = 'admin.html';
+    }).catch(() => {});
+  }
+
+  const loginBtn = document.getElementById('login-btn');
+  const errEl    = document.getElementById('login-error');
+
+  function showError(msg) {
+    errEl.textContent = msg;
+    errEl.style.display = 'block';
+  }
+
+  async function doLogin() {
+    const username = document.getElementById('login-username').value.trim();
+    const password = document.getElementById('login-password').value;
+
+    if (!username || !password) {
+      showError('Please enter your username and password.');
+      return;
+    }
+
+    loginBtn.disabled = true;
+    loginBtn.textContent = 'Signing in…';
+    errEl.style.display = 'none';
+
+    try {
+      const res = await fetch(API_BASE + '/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ username, password })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        showError(data.error || 'Login failed. Please try again.');
+        return;
+      }
+
+      // Store JWT in localStorage (also set as httpOnly cookie by server)
+      localStorage.setItem('ga_jwt', data.token);
+      localStorage.setItem('ga_manager', JSON.stringify(data.manager));
+
+      window.location.href = 'admin.html';
+
+    } catch (err) {
+      showError('Network error. Please check your connection.');
+    } finally {
+      loginBtn.disabled = false;
+      loginBtn.textContent = 'Sign In to Dashboard';
+      // Re-add arrow SVG
+      loginBtn.innerHTML = 'Sign In to Dashboard <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+    }
+  }
+
+  loginBtn.addEventListener('click', doLogin);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter') doLogin();
+  });
+</script>
+</body>
+</html>

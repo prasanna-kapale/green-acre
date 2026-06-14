@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — The Green Acre</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="config.js"></script>
+</head>
+<body>
+<div class="admin-layout">
+
+<!-- ════════════════════════════════════════════════════════
+     SIDEBAR
+════════════════════════════════════════════════════════════ -->
+<aside class="admin-sidebar">
+  <div class="admin-sidebar__logo">
+    <div class="nav__logo-mark" style="flex-shrink:0">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="white"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+    </div>
+    <div>
+      <span>The Green Acre</span>
+      <small>Manager Panel</small>
+    </div>
+  </div>
+
+  <nav class="admin-nav">
+    <div class="admin-nav__section">Overview</div>
+    <div class="admin-nav__item active" onclick="showSection('dashboard',this)">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      Dashboard
+    </div>
+
+    <div class="admin-nav__section">Bookings</div>
+    <div class="admin-nav__item" onclick="showSection('queue',this)">
+      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+      Reservation Queue
+      <span class="admin-nav__badge">3</span>
+    </div>
+
+    <div class="admin-nav__section">Calendar</div>
+    <div class="admin-nav__item" onclick="showSection('rate-calendar',this)">
+      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Rate & Calendar Manager
+    </div>
+
+    <div class="admin-nav__section">Content</div>
+    <div class="admin-nav__item" onclick="showSection('rules-editor',this)">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Content & Rules Editor
+    </div>
+
+    <div class="admin-nav__section">Settings</div>
+    <div class="admin-nav__item" onclick="showSection('settings',this)">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 10-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+      Settings
+    </div>
+  </nav>
+
+  <div class="admin-sidebar__footer">
+    <div class="admin-sidebar__user">
+      <div class="admin-sidebar__avatar">MG</div>
+      <div class="admin-sidebar__user-info">
+        <span>Manager</span>
+        <small>Logged in</small>
+      </div>
+      <a href="manager-login.html" style="margin-left:auto;color:rgba(255,255,255,.35);font-size:.75rem">Sign out</a>
+    </div>
+  </div>
+</aside>
+
+<!-- ════════════════════════════════════════════════════════
+     MAIN CONTENT
+════════════════════════════════════════════════════════════ -->
+<main class="admin-main">
+
+  <!-- ── DASHBOARD ─────────────────────────────────────── -->
+  <div id="section-dashboard">
+    <div class="admin-topbar">
+      <div>
+        <h1>Dashboard</h1>
+        <p>Good morning — here's what's happening at The Green Acre today.</p>
+      </div>
+      <a href="index.html" target="_blank" class="btn-outline" style="font-size:.85rem;padding:.55rem 1rem">
+        View Public Site ↗
+      </a>
+    </div>
+
+    <div class="admin-stats">
+      <div class="admin-stat-card">
+        <div class="admin-stat-card__label">This Month — Revenue</div>
+        <div class="admin-stat-card__value">₹84,000</div>
+        <div class="admin-stat-card__change up">↑ 12% vs last month</div>
+      </div>
+      <div class="admin-stat-card">
+        <div class="admin-stat-card__label">Pending Requests</div>
+        <div class="admin-stat-card__value">3</div>
+        <div class="admin-stat-card__change neutral">Awaiting confirmation</div>
+      </div>
+      <div class="admin-stat-card">
+        <div class="admin-stat-card__label">Confirmed Bookings</div>
+        <div class="admin-stat-card__value">11</div>
+        <div class="admin-stat-card__change up">↑ 3 this week</div>
+      </div>
+      <div class="admin-stat-card">
+        <div class="admin-stat-card__label">Days Booked (June)</div>
+        <div class="admin-stat-card__value">18</div>
+        <div class="admin-stat-card__change neutral">of 30 days</div>
+      </div>
+    </div>
+
+    <div class="admin-grid">
+      <!-- Recent Requests -->
+      <div class="admin-card">
+        <div class="admin-card__header">
+          <span class="admin-card__title">Recent Booking Requests</span>
+          <button class="action-btn" onclick="showSection('queue',this)">View All →</button>
+        </div>
+        <div class="admin-card__body" style="padding:0">
+          <table class="queue-table">
+            <thead>
+              <tr>
+                <th>Ref</th><th>Guest</th><th>Date & Slot</th><th>Amount</th><th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="recent-bookings-tbody">
+              <tr><td colspan="5" style="text-align:center;padding:1.5rem;color:var(--text-muted)">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Mini Calendar -->
+      <div class="admin-card">
+        <div class="admin-card__header">
+          <span class="admin-card__title">June 2025 — Quick View</span>
+          <button class="action-btn" onclick="showSection('rate-calendar',this)">Manage →</button>
+        </div>
+        <div class="admin-card__body">
+          <div class="admin-cal-grid" id="mini-cal"></div>
+          <div style="display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem">
+            <div class="legend-item"><div class="legend-dot legend-dot--available"></div><span style="font-size:.72rem;color:var(--text-muted)">Available</span></div>
+            <div class="legend-item"><div class="legend-dot legend-dot--peak"></div><span style="font-size:.72rem;color:var(--text-muted)">Peak</span></div>
+            <div class="legend-item"><div class="legend-dot legend-dot--booked"></div><span style="font-size:.72rem;color:var(--text-muted)">Booked</span></div>
+            <div class="legend-item"><div class="legend-dot legend-dot--closed"></div><span style="font-size:.72rem;color:var(--text-muted)">Closed</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RESERVATION QUEUE ──────────────────────────────── -->
+  <div id="section-queue" style="display:none">
+    <div class="admin-topbar">
+      <div><h1>Reservation Queue</h1><p>Manage incoming booking requests. Confirm after deposit receipt.</p></div>
+      <button class="btn-primary" style="font-size:.875rem">Export CSV</button>
+    </div>
+    <div class="admin-card">
+      <div class="admin-card__header">
+        <span class="admin-card__title">All Requests</span>
+        <div style="display:flex;gap:.5rem;align-items:center">
+          <select class="form-input" id="queue-status-filter" style="padding:.35rem .7rem;height:auto;width:auto;font-size:.82rem" onchange="loadQueue(this.value)">
+            <option value="ALL">All Status</option>
+            <option value="PENDING">Pending</option>
+            <option value="CONFIRMED">Confirmed</option>
+            <option value="RELEASED">Released</option>
+          </select>
+          <button class="btn-outline" style="font-size:.82rem;padding:.35rem .9rem" onclick="loadQueue(document.getElementById('queue-status-filter').value)">↻ Refresh</button>
+        </div>
+      </div>
+      <div class="admin-card__body" style="padding:0;overflow-x:auto">
+        <table class="queue-table" style="min-width:700px">
+          <thead>
+            <tr>
+              <th>Ref #</th><th>Guest Details</th><th>Date & Slot</th><th>Amount</th><th>Guests / Occasion</th><th>Status</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="queue-tbody">
+            <tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--text-muted)">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RATE & CALENDAR MANAGER ────────────────────────── -->
+  <div id="section-rate-calendar" style="display:none">
+    <div class="admin-topbar">
+      <div><h1>Rate & Calendar Manager</h1><p>Click any date to edit pricing, labels, or block availability.</p></div>
+    </div>
+    <div class="admin-grid">
+      <div class="admin-card">
+        <div class="admin-card__header">
+          <span class="admin-card__title" id="admin-cal-month-label">Loading…</span>
+          <div style="display:flex;gap:.5rem;align-items:center">
+            <button class="action-btn" onclick="changeRateCalMonth(-1)">‹ Prev</button>
+            <button class="action-btn" onclick="changeRateCalMonth(1)">Next ›</button>
+          </div>
+        </div>
+        <div class="admin-card__body">
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:.375rem;margin-bottom:.375rem">
+            <div style="text-align:center;font-size:.68rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);padding:.25rem">Su</div>
+            <div style="text-align:center;font-size:.68rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);padding:.25rem">Mo</div>
+            <div style="text-align:center;font-size:.68rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);padding:.25rem">Tu</div>
+            <div style="text-align:center;font-size:.68rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);padding:.25rem">We</div>
+            <div style="text-align:center;font-size:.68rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);padding:.25rem">Th</div>
+            <div style="text-align:center;font-size:.68rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);padding:.25rem">Fr</div>
+            <div style="text-align:center;font-size:.68rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);padding:.25rem">Sa</div>
+          </div>
+          <div class="admin-cal-grid" id="admin-cal-main"></div>
+        </div>
+      </div>
+      <div class="admin-card">
+        <div class="admin-card__header"><span class="admin-card__title">Default Base Rates</span></div>
+        <div class="admin-card__body">
+          <p style="font-size:.8rem;color:var(--text-muted);margin-bottom:1rem">Applied to all dates without a custom rule.</p>
+          <table style="width:100%;border-collapse:collapse">
+            <thead>
+              <tr>
+                <th style="text-align:left;padding:.5rem .75rem;font-size:.72rem;font-weight:500;text-transform:uppercase;color:var(--text-muted);border-bottom:1px solid var(--border)">Type</th>
+                <th style="text-align:left;padding:.5rem .75rem;font-size:.72rem;font-weight:500;text-transform:uppercase;color:var(--text-muted);border-bottom:1px solid var(--border)">Day Slot (₹)</th>
+                <th style="text-align:left;padding:.5rem .75rem;font-size:.72rem;font-weight:500;text-transform:uppercase;color:var(--text-muted);border-bottom:1px solid var(--border)">Night Slot (₹)</th>
+                <th style="border-bottom:1px solid var(--border)"></th>
+              </tr>
+            </thead>
+            <tbody id="default-rates-tbody">
+              <tr><td colspan="4" style="padding:1rem;text-align:center;color:var(--text-muted)">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RULES EDITOR ───────────────────────────────────── -->
+  <div id="section-rules-editor" style="display:none">
+    <div class="admin-topbar">
+      <div><h1>Content & Rules Editor</h1><p>Update guest-facing policy text. Changes publish immediately to the public site.</p></div>
+      <button id="save-rules-btn" class="btn-primary" onclick="saveRules()" style="font-size:.875rem">Save & Publish</button>
+    </div>
+    <div class="admin-grid">
+      <div class="admin-card admin-card--full">
+        <div class="admin-card__header">
+          <span class="admin-card__title">Guest Rules & Policies — Live Editor</span>
+          <span style="font-size:.78rem;color:var(--text-muted)">Changes publish immediately to the public site</span>
+        </div>
+        <div class="admin-card__body">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
+
+            <div>
+              <div style="font-size:.8rem;font-weight:500;color:var(--slate);margin-bottom:.5rem">Check-In & Check-Out Policy</div>
+              <div class="rules-editor">
+                <textarea id="policy-checkout_policy" style="min-height:140px">Loading…</textarea>
+              </div>
+            </div>
+
+            <div>
+              <div style="font-size:.8rem;font-weight:500;color:var(--slate);margin-bottom:.5rem">Cleanliness Standards</div>
+              <div class="rules-editor">
+                <textarea id="policy-cleanliness" style="min-height:140px">Loading…</textarea>
+              </div>
+            </div>
+
+            <div>
+              <div style="font-size:.8rem;font-weight:500;color:var(--slate);margin-bottom:.5rem">Pool & Safety Rules</div>
+              <div class="rules-editor">
+                <textarea id="policy-pool_safety" style="min-height:140px">Loading…</textarea>
+              </div>
+            </div>
+
+            <div>
+              <div style="font-size:.8rem;font-weight:500;color:var(--slate);margin-bottom:.5rem">General House Rules</div>
+              <div class="rules-editor">
+                <textarea id="policy-house_rules" style="min-height:140px">Loading…</textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SETTINGS ────────────────────────────────────────── -->
+  <div id="section-settings" style="display:none">
+    <div class="admin-topbar">
+      <div><h1>Settings</h1><p>Configure property details, notification preferences, and account settings.</p></div>
+    </div>
+    <div class="admin-grid">
+      <div class="admin-card">
+        <div class="admin-card__header"><span class="admin-card__title">Property Information</span></div>
+        <div class="admin-card__body">
+          <div class="form-group">
+            <label class="form-label">Property Name</label>
+            <input type="text" class="form-input" id="settings-property-name" placeholder="The Green Acre">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Manager WhatsApp Number</label>
+            <input type="tel" class="form-input" id="settings-manager-whatsapp" placeholder="+919876543210">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Max Guests Allowed</label>
+            <input type="number" class="form-input" id="settings-max-guests" placeholder="30">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Auto-Release Pending After (hours)</label>
+            <input type="number" class="form-input" id="settings-auto-release" placeholder="48">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Property Description (shown on site)</label>
+            <textarea class="form-textarea" id="settings-description" style="min-height:80px" placeholder="A premium private farmhouse retreat…"></textarea>
+          </div>
+          <button class="btn-primary" style="font-size:.875rem" onclick="saveSettings()">Save Settings</button>
+        </div>
+      </div>
+      <div class="admin-card">
+        <div class="admin-card__header"><span class="admin-card__title">Notification Preferences</span></div>
+        <div class="admin-card__body">
+          <div class="toggle-row">
+            <div>
+              <div class="toggle-label">New Booking Request Alert</div>
+              <div class="toggle-desc">Get notified on WhatsApp for new hold requests</div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" checked>
+              <span class="toggle-switch__track"></span>
+            </label>
+          </div>
+          <div class="toggle-row">
+            <div>
+              <div class="toggle-label">Auto-release Pending Holds</div>
+              <div class="toggle-desc">Automatically release pending holds after the configured hours</div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" checked>
+              <span class="toggle-switch__track"></span>
+            </label>
+          </div>
+          <div style="margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--border)">
+            <div style="font-size:.8rem;font-weight:500;color:var(--slate);margin-bottom:.75rem">Change Password</div>
+            <div class="form-group">
+              <label class="form-label">Current Password</label>
+              <input type="password" class="form-input" id="pw-current" placeholder="••••••••">
+            </div>
+            <div class="form-group">
+              <label class="form-label">New Password</label>
+              <input type="password" class="form-input" id="pw-new" placeholder="••••••••">
+            </div>
+            <button class="btn-outline" style="font-size:.875rem" onclick="changePassword()">Update Password</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+</div>
+
+<!-- ════════════════════════════════════════════════════════
+     RATE EDIT MODAL
+════════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="rate-edit-modal">
+  <div class="modal" style="max-width:420px">
+    <div class="modal__header">
+      <div>
+        <h2 class="modal__title">Edit Date — <span id="edit-date-label">Jun 14</span></h2>
+        <p style="font-size:.85rem;color:var(--text-muted);margin-top:.2rem">Pricing rules for this specific date</p>
+      </div>
+      <button class="modal__close" onclick="closeModal('rate-edit-modal')">✕</button>
+    </div>
+    <div class="modal__body">
+      <div class="form-group">
+        <label class="form-label">Date Label / Type</label>
+        <select class="form-input" id="edit-label">
+          <option value="NORMAL">Normal</option>
+          <option value="WEEKEND">Weekend</option>
+          <option value="HOLI">Holi</option>
+          <option value="DIWALI">Diwali</option>
+          <option value="EID">Eid</option>
+          <option value="PEAK">Other Peak</option>
+        </select>
+      </div>
+      <div class="rate-row">
+        <div class="form-group">
+          <label class="form-label">Day Slot Rate (₹)</label>
+          <input type="number" class="form-input" id="edit-day-rate" value="7500">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Night Slot Rate (₹)</label>
+          <input type="number" class="form-input" id="edit-night-rate" value="9000">
+        </div>
+      </div>
+      <div class="toggle-row" style="padding:.75rem 0 0">
+        <div>
+          <div class="toggle-label">Mark as Closed / Blackout</div>
+          <div class="toggle-desc">Guests cannot select this date at all</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="edit-closed">
+          <span class="toggle-switch__track"></span>
+        </label>
+      </div>
+      <input type="hidden" id="edit-rule-id" value="">
+    </div>
+    <div class="modal__footer" style="display:flex;gap:.5rem">
+      <button class="btn-outline" style="flex:1;justify-content:center" onclick="deleteRateRule()">Remove Rule</button>
+      <button class="btn-primary" style="flex:2;justify-content:center" onclick="saveRateEdit()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  function showSection(id, navEl) {
+    document.querySelectorAll('.admin-nav__item').forEach(el => el.classList.remove('active'));
+    if (navEl) navEl.classList.add('active');
+    document.querySelectorAll('[id^="section-"]').forEach(s => s.style.display = 'none');
+    const el = document.getElementById('section-' + id);
+    if (el) el.style.display = 'block';
+
+    if (id === 'dashboard')     loadDashboard();
+    if (id === 'queue')         loadQueue();
+    if (id === 'rate-calendar') loadRateCalendar();
+    if (id === 'rules-editor')  loadRulesEditor();
+    if (id === 'settings')      loadSettings();
+  }
+
+  /* ── AUTH ──────────────────────────────────────────────── */
+  const API_BASE = window.GA_API_BASE || 'http://localhost:3001/api';
+  let authToken = localStorage.getItem('ga_jwt');
+  let managerInfo = null;
+  try { managerInfo = JSON.parse(localStorage.getItem('ga_manager')); } catch(e) {}
+
+  async function authFetch(path, options = {}) {
+    if (!authToken) { window.location.href = 'manager-login.html'; throw new Error('No auth'); }
+    const res = await fetch(API_BASE + path, {
+      ...options,
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + authToken,
+        ...(options.headers || {}),
+      }
+    });
+    if (res.status === 401 || res.status === 403) {
+      localStorage.removeItem('ga_jwt');
+      localStorage.removeItem('ga_manager');
+      window.location.href = 'manager-login.html';
+      throw new Error('Unauthorized');
+    }
+    return res;
+  }
+
+  function signOut() {
+    authFetch('/auth/logout', { method: 'POST' }).catch(() => {});
+    localStorage.removeItem('ga_jwt');
+    localStorage.removeItem('ga_manager');
+    window.location.href = 'manager-login.html';
+  }
+
+  function fmt(n) { return '₹' + Number(n).toLocaleString('en-IN'); }
+  function escHtml(str) {
+    const d = document.createElement('div');
+    d.textContent = str || '';
+    return d.innerHTML;
+  }
+  function fmtDate(d) {
+    if (!d) return '—';
+    return new Date(d).toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
+  }
+
+  /* ── INIT AUTH CHECK ──────────────────────────────────── */
+  async function initAuthCheck() {
+    if (!authToken) { window.location.href = 'manager-login.html'; return; }
+    try {
+      const res = await fetch(API_BASE + '/auth/verify', {
+        headers: { 'Authorization': 'Bearer ' + authToken },
+        credentials: 'include',
+      });
+      if (!res.ok) {
+        localStorage.removeItem('ga_jwt');
+        window.location.href = 'manager-login.html';
+        return;
+      }
+      const data = await res.json();
+      managerInfo = data.manager;
+      // Update sidebar user display
+      const nameEl = document.querySelector('.admin-sidebar__user-info span');
+      const initEl = document.querySelector('.admin-sidebar__avatar');
+      if (nameEl) nameEl.textContent = data.manager.displayName || 'Manager';
+      if (initEl) initEl.textContent = (data.manager.displayName || 'M').charAt(0).toUpperCase();
+
+      // Wire sign-out link
+      const signOutLink = document.querySelector('.admin-sidebar__user a');
+      if (signOutLink) signOutLink.onclick = (e) => { e.preventDefault(); signOut(); };
+
+      loadDashboard();
+    } catch(e) {
+      window.location.href = 'manager-login.html';
+    }
+  }
+
+  /* ── DASHBOARD ─────────────────────────────────────────── */
+  async function loadDashboard() {
+    try {
+      const res = await authFetch('/admin/stats');
+      const data = await res.json();
+
+      // Update stat cards
+      const cards = document.querySelectorAll('.admin-stat-card');
+      if (cards[0]) {
+        cards[0].querySelector('.admin-stat-card__value').textContent = fmt(data.monthlyRevenue);
+        if (data.revenueTrend !== null) {
+          const change = cards[0].querySelector('.admin-stat-card__change');
+          const dir = data.revenueTrend >= 0 ? 'up' : 'down';
+          change.className = 'admin-stat-card__change ' + dir;
+          change.textContent = (data.revenueTrend >= 0 ? '↑ ' : '↓ ') + Math.abs(data.revenueTrend) + '% vs last month';
+        }
+      }
+      if (cards[1]) {
+        cards[1].querySelector('.admin-stat-card__value').textContent = data.pendingCount;
+      }
+      if (cards[2]) {
+        cards[2].querySelector('.admin-stat-card__value').textContent = data.confirmedCount;
+      }
+
+      // Update pending badge in sidebar
+      const badge = document.querySelector('.admin-nav__badge');
+      if (badge) badge.textContent = data.pendingCount;
+
+      // Recent bookings table
+      const tbody = document.querySelector('#recent-bookings-tbody');
+      if (tbody && data.recentBookings) {
+        tbody.innerHTML = data.recentBookings.map(b => `
+          <tr>
+            <td><span style="font-family:var(--font-mono,monospace);font-size:.8rem">${escHtml(b.id)}</span></td>
+            <td>${escHtml(b.guest_name)}</td>
+            <td>${escHtml(b.booking_date)} · ${b.slot === 'day' ? '☀️ Day' : '🌙 Night'}</td>
+            <td>${fmt(b.rate_applied)}</td>
+            <td><span class="status-badge status-badge--${b.status.toLowerCase()}"><span class="status-badge-dot"></span>${b.status}</span></td>
+          </tr>
+        `).join('');
+      }
+
+      // Render mini calendar on dashboard
+      renderAdminMiniCal();
+
+    } catch(e) { console.error('Dashboard load error:', e.message); }
+  }
+
+  /* ── QUEUE ─────────────────────────────────────────────── */
+  async function loadQueue(statusFilter) {
+    const filter = statusFilter || 'ALL';
+    const tbody = document.getElementById('queue-tbody');
+    if (!tbody) return;
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--text-muted)">Loading…</td></tr>';
+
+    try {
+      const res = await authFetch(`/admin/bookings?status=${filter}&limit=100`);
+      const data = await res.json();
+
+      if (!data.bookings || data.bookings.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--text-muted)">No bookings found.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = data.bookings.map(b => {
+        const slotLabel = b.slot === 'day' ? '☀️ Day' : '🌙 Night';
+        const waLink = `https://wa.me/${b.guest_phone.replace(/\D/g,'')}`;
+        const actions = b.status === 'PENDING' ? `
+          <button class="action-btn action-btn--confirm" onclick="confirmBooking('${escHtml(b.id)}',this)">Confirm</button>
+          <button class="action-btn action-btn--release" onclick="releaseBooking('${escHtml(b.id)}',this)">Release</button>
+          <a href="${escHtml(waLink)}" target="_blank" class="action-btn action-btn--whatsapp">WhatsApp</a>
+        ` : b.status === 'CONFIRMED' ? `
+          <button class="action-btn action-btn--release" onclick="releaseBooking('${escHtml(b.id)}',this)">Release</button>
+          <a href="${escHtml(waLink)}" target="_blank" class="action-btn action-btn--whatsapp">WhatsApp</a>
+        ` : `<span style="font-size:.8rem;color:var(--text-muted)">${b.status}</span>`;
+
+        return `<tr id="row-${b.id.replace(/[^a-z0-9]/gi,'_')}">
+          <td><span style="font-family:monospace;font-size:.78rem">${escHtml(b.id)}</span></td>
+          <td>${escHtml(b.guest_name)}<br><small style="color:var(--text-muted)">${escHtml(b.guest_phone)}</small></td>
+          <td>${fmtDate(b.booking_date)} · ${slotLabel}</td>
+          <td>${fmt(b.rate_applied)}</td>
+          <td>${b.guest_count} guest${b.guest_count > 1 ? 's' : ''}${b.occasion ? '<br><small>' + escHtml(b.occasion) + '</small>' : ''}</td>
+          <td><span class="status-badge status-badge--${b.status.toLowerCase()}"><span class="status-badge-dot"></span>${b.status}</span></td>
+          <td style="white-space:nowrap">${actions}</td>
+        </tr>`;
+      }).join('');
+    } catch(e) { 
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:2rem;color:#ef4444">Error loading bookings.</td></tr>';
+    }
+  }
+
+  async function confirmBooking(bookingId, btn) {
+    if (!confirm('Confirm this booking?')) return;
+    btn.disabled = true;
+    btn.textContent = '…';
+    try {
+      const res = await authFetch(`/admin/bookings/${bookingId}/confirm`, { method: 'PATCH', body: '{}' });
+      const data = await res.json();
+      if (!res.ok) { alert(data.error || 'Failed to confirm.'); return; }
+
+      // Update row in UI
+      const row = document.getElementById('row-' + bookingId.replace(/[^a-z0-9]/gi,'_'));
+      if (row) {
+        const statusCell = row.querySelector('.status-badge');
+        if (statusCell) {
+          statusCell.className = 'status-badge status-badge--confirmed';
+          statusCell.innerHTML = '<span class="status-badge-dot"></span>CONFIRMED';
+        }
+        const actCell = row.cells[row.cells.length - 1];
+        const phone = row.cells[1].textContent.split('\n').pop().trim();
+        actCell.innerHTML = `<button class="action-btn action-btn--release" onclick="releaseBooking('${escHtml(bookingId)}',this)">Release</button>
+          <a href="https://wa.me/${escHtml(phone.replace(/\D/g,''))}" target="_blank" class="action-btn action-btn--whatsapp">WhatsApp</a>`;
+      }
+      if (data.whatsappDeepLink && !data.whatsappSent) {
+        if (confirm('WhatsApp not auto-sent. Open WhatsApp to notify guest?')) {
+          window.open(data.whatsappDeepLink, '_blank');
+        }
+      }
+      loadDashboard();
+    } catch(e) { alert('Network error.'); btn.disabled = false; btn.textContent = 'Confirm'; }
+  }
+
+  async function releaseBooking(bookingId, btn) {
+    if (!confirm('Release this booking? The date will become available again.')) return;
+    btn.disabled = true;
+    btn.textContent = '…';
+    try {
+      const res = await authFetch(`/admin/bookings/${bookingId}/release`, { method: 'PATCH', body: '{}' });
+      const data = await res.json();
+      if (!res.ok) { alert(data.error || 'Failed to release.'); return; }
+      const row = document.getElementById('row-' + bookingId.replace(/[^a-z0-9]/gi,'_'));
+      if (row) {
+        row.style.opacity = '.4';
+        setTimeout(() => row.remove(), 500);
+      }
+      loadDashboard();
+    } catch(e) { alert('Network error.'); btn.disabled = false; btn.textContent = 'Release'; }
+  }
+
+  /* ── RATE CALENDAR ─────────────────────────────────────── */
+  let rateCalYear  = new Date().getFullYear();
+  let rateCalMonth = new Date().getMonth(); // 0-indexed
+  let calendarRules = {};
+  let defaultRates = {};
+
+  async function loadRateCalendar() {
+    await loadDefaultRates();
+    renderRateCalendar();
+  }
+
+  async function loadDefaultRates() {
+    try {
+      const res = await authFetch('/admin/default-rates');
+      const data = await res.json();
+      data.rates.forEach(r => { defaultRates[r.day_type] = r; });
+      renderDefaultRatesTable();
+    } catch(e) { console.error('Default rates error:', e.message); }
+  }
+
+  function renderDefaultRatesTable() {
+    const tbody = document.getElementById('default-rates-tbody');
+    if (!tbody) return;
+    tbody.innerHTML = Object.values(defaultRates).map(r => `
+      <tr>
+        <td>${r.day_type === 'weekday' ? 'Weekday (Mon–Thu)' : 'Weekend (Fri–Sun)'}</td>
+        <td><input type="number" value="${r.day_slot_rate}" id="dr-day-${r.id}" style="width:90px;padding:.3rem .5rem;border:1px solid var(--border);border-radius:4px;font-size:.85rem"></td>
+        <td><input type="number" value="${r.night_slot_rate}" id="dr-night-${r.id}" style="width:90px;padding:.3rem .5rem;border:1px solid var(--border);border-radius:4px;font-size:.85rem"></td>
+        <td><button class="action-btn" onclick="saveDefaultRate('${r.id}')">Save</button></td>
+      </tr>
+    `).join('');
+  }
+
+  async function saveDefaultRate(id) {
+    const dayRate   = document.getElementById('dr-day-' + id).value;
+    const nightRate = document.getElementById('dr-night-' + id).value;
+    try {
+      const res = await authFetch('/admin/default-rates/' + id, {
+        method: 'PUT',
+        body: JSON.stringify({ daySlotRate: parseFloat(dayRate), nightSlotRate: parseFloat(nightRate) })
+      });
+      const data = await res.json();
+      if (!res.ok) { alert(data.error); return; }
+      alert('Default rates saved!');
+      loadDefaultRates();
+    } catch(e) { alert('Save failed.'); }
+  }
+
+  async function renderRateCalendar() {
+    const mm = String(rateCalMonth + 1).padStart(2, '0');
+    const monthStr = `${rateCalYear}-${mm}`;
+    document.getElementById('admin-cal-month-label').textContent =
+      ['January','February','March','April','May','June','July','August','September','October','November','December'][rateCalMonth] + ' ' + rateCalYear;
+
+    try {
+      // Fetch both pricing rules and calendar status
+      const [rulesRes, calRes] = await Promise.all([
+        authFetch(`/admin/pricing-rules?month=${monthStr}`),
+        fetch(API_BASE + `/calendar?month=${monthStr}`)
+      ]);
+      const rulesData = await rulesRes.json();
+      const calData   = await calRes.json();
+
+      calendarRules = {};
+      rulesData.rules.forEach(r => { calendarRules[r.targetDate] = r; });
+
+      const grid = document.getElementById('admin-cal-main');
+      if (!grid) return;
+      grid.innerHTML = '';
+
+      const firstDayOfWeek = calData.days.length > 0 ? calData.days[0].dayOfWeek : new Date(rateCalYear, rateCalMonth, 1).getDay();
+      for (let i = 0; i < firstDayOfWeek; i++) {
+        const blank = document.createElement('div');
+        blank.style.cssText = 'height:50px';
+        grid.appendChild(blank);
+      }
+
+      calData.days.forEach(day => {
+        const div = document.createElement('div');
+        div.className = 'admin-cal-day';
+        const rule = calendarRules[day.date];
+
+        let extraClass = '';
+        if (rule && rule.is_closed) extraClass = 'admin-cal-day--closed';
+        else if (day.daySlot.status === 'booked' || day.nightSlot.status === 'booked') extraClass = 'admin-cal-day--booked';
+        else if (rule && ['HOLI','DIWALI','EID','CHRISTMAS','NEW_YEAR','PEAK'].includes(rule.label_name)) extraClass = 'admin-cal-day--peak';
+
+        if (extraClass) div.classList.add(extraClass.replace('admin-cal-day--','') + '' ? extraClass.split('--')[1] : '');
+        div.classList.add(...(extraClass ? [extraClass.replace('admin-cal-day--','')] : []));
+
+        div.innerHTML = `<div class="admin-cal-day__num">${day.day}</div>`;
+        if (rule) {
+          const rateEl = document.createElement('div');
+          rateEl.style.cssText = 'font-size:.6rem;color:var(--green);font-weight:600;line-height:1.1';
+          rateEl.textContent = rule.is_closed ? 'CLOSED' : (rule.label_name !== 'NORMAL' ? rule.label_name : '');
+          div.appendChild(rateEl);
+        }
+
+        div.style.cursor = 'pointer';
+        div.addEventListener('click', () => openRateEdit(day.date, day.day, rule));
+        grid.appendChild(div);
+      });
+
+    } catch(e) { console.error('Rate calendar error:', e.message); }
+  }
+
+  function changeRateCalMonth(dir) {
+    rateCalMonth += dir;
+    if (rateCalMonth > 11) { rateCalMonth = 0; rateCalYear++; }
+    if (rateCalMonth < 0)  { rateCalMonth = 11; rateCalYear--; }
+    renderRateCalendar();
+  }
+
+  let editingDate = null;
+
+  function openRateEdit(dateStr, day, existingRule) {
+    editingDate = dateStr;
+    document.getElementById('edit-date-label').textContent =
+      ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][rateCalMonth] + ' ' + day + ', ' + rateCalYear;
+
+    document.getElementById('edit-label').value   = existingRule ? existingRule.label_name : 'NORMAL';
+    document.getElementById('edit-day-rate').value   = existingRule && existingRule.day_slot_rate ? existingRule.day_slot_rate : '';
+    document.getElementById('edit-night-rate').value = existingRule && existingRule.night_slot_rate ? existingRule.night_slot_rate : '';
+    document.getElementById('edit-closed').checked  = existingRule ? existingRule.is_closed : false;
+    document.getElementById('edit-rule-id').value   = existingRule ? existingRule.id : '';
+
+    document.getElementById('rate-edit-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  async function saveRateEdit() {
+    const dayRate   = document.getElementById('edit-day-rate').value;
+    const nightRate = document.getElementById('edit-night-rate').value;
+    const label     = document.getElementById('edit-label').value;
+    const isClosed  = document.getElementById('edit-closed').checked;
+
+    if (!editingDate) return;
+
+    try {
+      const res = await authFetch('/admin/pricing-rules', {
+        method: 'POST',
+        body: JSON.stringify({
+          targetDate: editingDate,
+          labelName: label,
+          daySlotRate: dayRate ? parseFloat(dayRate) : null,
+          nightSlotRate: nightRate ? parseFloat(nightRate) : null,
+          isClosed,
+        })
+      });
+      const data = await res.json();
+      if (!res.ok) { alert(data.error || 'Save failed.'); return; }
+
+      closeModal('rate-edit-modal');
+      renderRateCalendar();
+    } catch(e) { alert('Network error.'); }
+  }
+
+  async function deleteRateRule() {
+    const ruleId = document.getElementById('edit-rule-id').value;
+    if (!ruleId) { closeModal('rate-edit-modal'); return; }
+    if (!confirm('Remove custom rule for this date? It will revert to default rates.')) return;
+
+    try {
+      const res = await authFetch('/admin/pricing-rules/' + ruleId, { method: 'DELETE' });
+      if (!res.ok) { alert('Delete failed.'); return; }
+      closeModal('rate-edit-modal');
+      renderRateCalendar();
+    } catch(e) { alert('Network error.'); }
+  }
+
+  /* ── RULES EDITOR ──────────────────────────────────────── */
+  async function loadRulesEditor() {
+    try {
+      const res = await authFetch('/admin/policy');
+      const data = await res.json();
+
+      data.policies.forEach(p => {
+        const textarea = document.getElementById('policy-' + p.section_key);
+        if (textarea) textarea.value = p.content_text;
+        const titleInput = document.getElementById('policy-title-' + p.section_key);
+        if (titleInput) titleInput.value = p.title;
+      });
+    } catch(e) { console.error('Rules editor load error:', e.message); }
+  }
+
+  async function saveRules() {
+    const sections = ['checkout_policy','cleanliness','pool_safety','house_rules'];
+    const btn = document.getElementById('save-rules-btn');
+    if (btn) { btn.disabled = true; btn.textContent = 'Saving…'; }
+
+    let successCount = 0;
+    for (const key of sections) {
+      const textarea = document.getElementById('policy-' + key);
+      if (!textarea) continue;
+      try {
+        const res = await authFetch(`/admin/policy/${key}`, {
+          method: 'PUT',
+          body: JSON.stringify({ contentText: textarea.value })
+        });
+        if (res.ok) successCount++;
+      } catch(e) { console.error('Save policy error:', key, e.message); }
+    }
+
+    if (btn) { btn.disabled = false; btn.textContent = 'Save & Publish'; }
+    alert(successCount === sections.length
+      ? '✅ All policy sections saved and published successfully!'
+      : '⚠️ Some sections may not have saved. Please try again.');
+  }
+
+  /* ── SETTINGS ──────────────────────────────────────────── */
+  async function loadSettings() {
+    try {
+      const res = await authFetch('/admin/content');
+      const data = await res.json();
+      const c = data.content;
+
+      const fields = {
+        'settings-property-name': c.property_name,
+        'settings-manager-whatsapp': c.manager_whatsapp,
+        'settings-max-guests': c.max_guests,
+        'settings-auto-release': c.auto_release_hours,
+        'settings-description': c.property_description,
+      };
+      Object.entries(fields).forEach(([id, val]) => {
+        const el = document.getElementById(id);
+        if (el && val) el.value = val;
+      });
+    } catch(e) { console.error('Settings load error:', e.message); }
+  }
+
+  async function saveSettings() {
+    const fields = {
+      property_name:        document.getElementById('settings-property-name')?.value,
+      manager_whatsapp:     document.getElementById('settings-manager-whatsapp')?.value,
+      max_guests:           document.getElementById('settings-max-guests')?.value,
+      auto_release_hours:   document.getElementById('settings-auto-release')?.value,
+      property_description: document.getElementById('settings-description')?.value,
+    };
+    try {
+      const res = await authFetch('/admin/content', { method: 'PATCH', body: JSON.stringify(fields) });
+      if (res.ok) alert('Settings saved!');
+      else { const d = await res.json(); alert(d.error || 'Save failed.'); }
+    } catch(e) { alert('Network error.'); }
+  }
+
+  /* ── MINI CALENDAR (dashboard) ─────────────────────────── */
+  async function renderAdminMiniCal() {
+    const now = new Date();
+    const mm  = String(now.getMonth() + 1).padStart(2,'0');
+    const monthStr = `${now.getFullYear()}-${mm}`;
+
+    try {
+      const res = await fetch(API_BASE + `/calendar?month=${monthStr}`);
+      const data = await res.json();
+
+      const container = document.getElementById('mini-cal');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const firstDayOfWeek = data.days[0] ? data.days[0].dayOfWeek : new Date(now.getFullYear(), now.getMonth(), 1).getDay();
+      for (let i = 0; i < firstDayOfWeek; i++) {
+        const blank = document.createElement('div');
+        blank.style.cssText = 'height:24px';
+        container.appendChild(blank);
+      }
+
+      data.days.forEach(day => {
+        const div = document.createElement('div');
+        div.className = 'admin-cal-day';
+        const s = day.daySlot.status;
+        if (s === 'booked')    div.classList.add('booked');
+        else if (s === 'pending') div.classList.add('pending');
+        else if (s === 'closed')  div.classList.add('closed');
+        div.innerHTML = `<div class="admin-cal-day__num">${day.day}</div>`;
+        container.appendChild(div);
+      });
+    } catch(e) { /* mini cal is non-critical */ }
+  }
+
+  /* ── MODALS ─────────────────────────────────────────────── */
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.modal-overlay').forEach(el => {
+    el.addEventListener('click', e => { if (e.target === el) closeModal(el.id); });
+  });
+
+  async function changePassword() {
+    const current = document.getElementById('pw-current').value;
+    const newPw   = document.getElementById('pw-new').value;
+    if (!current || !newPw) { alert('Please fill in both password fields.'); return; }
+    if (newPw.length < 8)   { alert('New password must be at least 8 characters.'); return; }
+    try {
+      const res = await authFetch('/admin/change-password', {
+        method: 'POST',
+        body: JSON.stringify({ currentPassword: current, newPassword: newPw })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        alert('Password changed successfully. Please log in again.');
+        signOut();
+      } else {
+        alert(data.error || 'Password change failed.');
+      }
+    } catch(e) { alert('Network error.'); }
+  }
+
+  /* ── BOOT ─────────────────────────────────────────────── */
+  initAuthCheck();
+</script>
+</body>
+</html>
